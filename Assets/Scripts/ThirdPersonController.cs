@@ -100,14 +100,14 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
-
+        GameObject _geometry;
 
         //blinking ability
         int _maxUses;
         float _cooldownTimer;
         bool _blinking = false;
         Vector3 _destination;
-        ParticleSystem _trail;
+        GameObject _trail;
 
 
         // cinemachine
@@ -190,12 +190,13 @@ namespace StarterAssets
 
 
             //blink
-            _trail = transform.Find("Trail").GetComponent<ParticleSystem>();
+            _trail = transform.Find("Trail").gameObject;
+            _geometry = transform.Find("Geometry").gameObject;
             _maxUses = Uses;
             _cooldownTimer = cooldown;
             UIText.text = Uses.ToString();
-
-
+            _trail.SetActive(false);
+            _geometry.SetActive(true);
 
 
         }
@@ -265,6 +266,8 @@ namespace StarterAssets
             {
                 _input.blink = false;
                 _blinking = true;
+                _trail.SetActive(true);
+                _geometry.SetActive(false);
                 Uses -= 1;
                 UIText.text = Uses.ToString();
 
@@ -274,7 +277,7 @@ namespace StarterAssets
                 {
 
 
-                    _trail.Play();
+                  
 
                     RaycastHit hit;
                     if (Physics.Raycast(cam.position, cam.forward, out hit, distance, layermask))
@@ -289,7 +292,7 @@ namespace StarterAssets
                         Debug.DrawLine(cam.position, (cam.position + cam.forward.normalized * distance), Color.green, 2);
 
                     }
-                    _destination.y = transform.position.y+1;
+                    _destination.y = transform.position.y;
                 }
 
             }
@@ -394,6 +397,9 @@ namespace StarterAssets
                 {
                     Debug.Log(_destination);
                     _blinking = false;
+                    _trail.SetActive(false);
+                    _geometry.SetActive(true);
+
                 }
             }
 
@@ -457,7 +463,7 @@ namespace StarterAssets
                         _animator.SetBool(_animIDFreeFall, true);
                     }
                 }
-
+                
                 // if we are not grounded, do not jump
                 _input.jump = false;
             }
