@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Text = UnityEngine.UI.Text;
+using System.Collections;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using static System.Net.Mime.MediaTypeNames;
@@ -52,6 +53,8 @@ namespace StarterAssets
 
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
+        public AudioClip DashClip;
+        [Range(0, 1)] public float DashAudioVolume = 0.5f;
 
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
@@ -190,7 +193,7 @@ namespace StarterAssets
 
 
             //blink
-            _trail = transform.Find("Trail").gameObject;
+            _trail = transform.Find("Particles").gameObject;
             _geometry = transform.Find("Geometry").gameObject;
             _maxUses = Uses;
             _cooldownTimer = cooldown;
@@ -270,6 +273,7 @@ namespace StarterAssets
                 _geometry.SetActive(false);
                 Uses -= 1;
                 UIText.text = Uses.ToString();
+                AudioSource.PlayClipAtPoint(DashClip, transform.TransformPoint(_controller.center), DashAudioVolume);
 
 
 
@@ -398,6 +402,7 @@ namespace StarterAssets
                     Debug.Log(_destination);
                     _blinking = false;
                     _trail.SetActive(false);
+                    //StartCoroutine(StopTrail());
                     _geometry.SetActive(true);
 
                 }
@@ -405,7 +410,12 @@ namespace StarterAssets
 
 
         }
-
+        IEnumerator StopTrail()
+        {
+            
+            yield return new WaitForSeconds(2f);
+         //  _trail.SetActive(false);
+        }
         private void JumpAndGravity()
         {
             if (Grounded)

@@ -150,6 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4542206208932356248}
   - component: {fileID: 779521790538741631}
+  - component: {fileID: 852082132657482330}
   m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
@@ -234,6 +235,26 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &852082132657482330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743503367066904597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &7642859409816467763
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 3841384982787575142}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 1631
+  m_shaderPropertyID: 835
   m_materialData:
   - m_trailRenderer: {fileID: 1893065722960749156}
     m_uvTiling: {x: 0.15, y: 1}

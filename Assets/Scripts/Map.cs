@@ -13,7 +13,12 @@ public class Map : MonoBehaviour
     Material wall;
     private int randomColumnToEnd;
     private int randomColumnToStart;
-
+    public int scale = 5;
+    public int mapSize = 20;
+    public int nHoles = 20;
+    public GameObject cup;
+    public GameObject player;
+    public int cupScale = 15;
 
     Vector3[] verticesWall = new Vector3[] {
                         new Vector3(0, 0, 0), //0
@@ -63,7 +68,6 @@ public class Map : MonoBehaviour
         Debug.Log("Startign");
         // 0 - wall , 1 - free space , 2- starting position , -3 end position
         // the player will began in the bottom of the board this means at the row 19 and in a random column and has to reach the row 0 in a random column 
-        randomColumnToEnd = Random.Range(0, map.GetLength(0) - 1);
         randomColumnToStart = Random.Range(0, map.GetLength(1) - 1);
 
         int rowToEnd = 0;
@@ -132,7 +136,10 @@ public class Map : MonoBehaviour
                 map[auxR, auxC] = 1;
             }
             Debug.Log("All Done");
+            randomColumnToEnd = auxC;
         }
+
+
         catch (IndexOutOfRangeException e)
         {
             Debug.Log(auxR + "  " + auxC);
@@ -154,16 +161,23 @@ public class Map : MonoBehaviour
     }
     void Start()
     {
-        int[,] map = new int[20, 20];
-        initializeCorrectPath(ref map);
-        addRandomHoles(ref map, 20);
-        //print2DimensionalArray(ref map);
 
+        Cursor.lockState = CursorLockMode.Locked;
+        int[,] map = new int[mapSize, mapSize];
+        initializeCorrectPath(ref map);
+        addRandomHoles(ref map, nHoles);
+        //print2DimensionalArray(ref map);
+        StartCoroutine(DrawMap(map));
+
+
+    }
+    IEnumerator DrawMap(int[,] map)
+    {
         for (int i = 0; i < map.GetLength(0); i++)
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-
+                yield return new WaitForSeconds(0.0005f);
                 {
 
 
@@ -196,13 +210,13 @@ public class Map : MonoBehaviour
 
 
 
-
+                    mesh.RecalculateNormals();
                     obj.GetComponent<MeshFilter>().mesh = mesh;
                     obj.AddComponent<MeshCollider>();
                     //obj.AddComponent<Rigidbody>();
 
-                    obj.transform.SetPositionAndRotation(new Vector3(i * 5, 0, j * 5), Quaternion.identity);
-                    obj.transform.localScale = new Vector3(5, 5, 5);
+                    obj.transform.SetPositionAndRotation(new Vector3(i * scale, 0, j * scale), Quaternion.identity);
+                    obj.transform.localScale = new Vector3(scale, scale, scale);
 
 
                 }
@@ -211,12 +225,16 @@ public class Map : MonoBehaviour
         }
 
         // moving character to the start position;
-     //   GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(3 + ((map.GetLength(0) - 1) * 5), 10, 7 + (randomColumnToStart * 5));
+        //   GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(3 + ((map.GetLength(0) - 1) * 5), 10, 7 + (randomColumnToStart * 5));
+        Debug.Log(randomColumnToStart);
+        player.transform.position = new Vector3(2 + ((map.GetLength(0) - 1) * scale), 10, randomColumnToStart * scale);
 
-        //   GameObject.FindGameObjectWithTag("Player").transform.position = new Vector3(randomColumnToStart, 10, map.GetLength(0) - 1 );
+        cup.transform.position = new Vector3(5, 0, 5 + (randomColumnToEnd * scale));
+        cup.transform.localScale = new Vector3(cupScale, cupScale, cupScale);
+        Instantiate(cup);
+        Instantiate(player);
 
     }
-
     // Update is called once per frame
     void Update()
     {

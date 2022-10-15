@@ -41,8 +41,8 @@ Shader "MoveToTrailUV/Add"
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
-                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz); // old UnityObjectToClipPos 
+                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap).xy;
                 return OUT;
             }
 
