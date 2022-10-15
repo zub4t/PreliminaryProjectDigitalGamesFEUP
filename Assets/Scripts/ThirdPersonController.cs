@@ -135,6 +135,7 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDFire;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -211,6 +212,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Fire();
         }
 
         private void LateUpdate()
@@ -225,6 +227,8 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDFire = Animator.StringToHash("Fire");
+
         }
 
         private void GroundedCheck()
@@ -262,7 +266,16 @@ namespace StarterAssets
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw, 0.0f);
         }
+        private void Fire()
+        {
+            if (_input.fire && !_animator.GetBool("isAttacking"))
+            {
 
+                _animator.SetBool(_animIDFire, true);
+         
+
+            }
+        }
         private void Move()
         {
             if (_input.blink)
@@ -302,7 +315,7 @@ namespace StarterAssets
             }
 
 
-            if (!_blinking)
+            if (!_blinking && !_animator.GetBool("isAttacking"))
             {
                 // set target speed based on move speed, sprint speed and if sprint is pressed
                 float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;

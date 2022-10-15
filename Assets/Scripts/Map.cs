@@ -19,7 +19,7 @@ public class Map : MonoBehaviour
     public GameObject cup;
     public GameObject player;
     public int cupScale = 15;
-
+    public float speedToDrawMap = 0.0005f;
     Vector3[] verticesWall = new Vector3[] {
                         new Vector3(0, 0, 0), //0
                         new Vector3(0, 0, 1), //1
@@ -177,7 +177,7 @@ public class Map : MonoBehaviour
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                yield return new WaitForSeconds(0.0005f);
+                yield return new WaitForSeconds(0);
                 {
 
 

@@ -13,7 +13,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
         public bool blink;
-
+        public bool fire;
         [Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -49,6 +49,11 @@ namespace StarterAssets
         {
             BlinkInput(value.isPressed);
         }
+
+        public void OnFire(InputValue value)
+        {
+            FireInput(value.isPressed);
+        }
 #endif
 
 
@@ -75,7 +80,10 @@ namespace StarterAssets
         {
             blink = newBlinkState;
         }
-
+        public void FireInput(bool newFireState)
+        {
+            fire = newFireState;
+        }
         private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);

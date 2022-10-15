@@ -415,6 +415,11 @@ PrefabInstance:
       propertyPath: cupScale
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8879585602622787372, guid: 4c8eb38de82e5c249b116d2a7df39433,
+        type: 3}
+      propertyPath: speedToDrawMap
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8879585602622787373, guid: 4c8eb38de82e5c249b116d2a7df39433,
         type: 3}
       propertyPath: m_RootOrder
