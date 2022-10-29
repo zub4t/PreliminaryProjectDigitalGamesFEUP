@@ -231,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 moveV = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         
-        if (_animator.GetBool("Kick") || _animator.GetBool("Punch"))
+        if (!_animator.GetBool("CanMove") || _animator.GetBool("Kick") || _animator.GetBool("Punch") || !Grounded)
         {
             moveV = Vector2.zero;
         }
@@ -332,13 +332,13 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump
-            if (Input.GetKey("space") && _jumpTimeoutDelta <= 0.0f)
+            if (Input.GetKey("space") && _jumpTimeoutDelta <= 0.0f && !_animator.GetBool("Punch") && !_animator.GetBool("Kick"))
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    if (_animationBlend > 2)
+                    if (_animationBlend > 1)
                     {
                         StartCoroutine(Delay(0.1f));
 
