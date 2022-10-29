@@ -93,6 +93,8 @@ public class PlayerMovement : MonoBehaviour
     private int _animIDMotionSpeed;
 
 
+    private float _timeMoving = 0f;
+
     private Animator _animator;
     private CharacterController _controller;
     private GameObject _mainCamera;
@@ -128,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         CameraRotation();
     }
     // Update is called once per frame
-   void Update()
+    void Update()
     {
         GroundedCheck();
 
@@ -140,12 +142,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void BattleMode()
     {
-        if(Input.GetKeyDown(KeyCode.M)){
+        if (Input.GetKeyDown(KeyCode.M))
+        {
             _animator.SetBool("BattleMode", !_animator.GetBool("BattleMode"));
 
         }
-        if (Input.GetMouseButtonDown(0)) { 
-            _animator.SetBool("Atk", !_animator.GetBool("Atk"));
+        if (Input.GetMouseButtonDown(0))
+        {
+            _animator.SetBool("Punch", true);
+
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            _animator.SetBool("Kick", true);
 
         }
     }
@@ -221,6 +230,22 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         Vector2 moveV = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        
+        if (_animator.GetBool("Kick") || _animator.GetBool("Punch"))
+        {
+            moveV = Vector2.zero;
+        }
+        
+        if (moveV.magnitude < 0.2f)
+        {
+            _timeMoving = 0f;
+        }
+        else
+        {
+            _timeMoving += Time.deltaTime;
+            if (_timeMoving > 1)
+                _timeMoving = 1f;
+        }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? SprintSpeed : MoveSpeed;
 
@@ -234,25 +259,25 @@ public class PlayerMovement : MonoBehaviour
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
         float speedOffset = 0.1f;
-/*
+
         // accelerate or decelerate to target speed
         if (currentHorizontalSpeed < targetSpeed - speedOffset ||
             currentHorizontalSpeed > targetSpeed + speedOffset)
         {
-            Debug.Log(currentHorizontalSpeed + " : " + targetSpeed);
             // creates curved result rather than a linear one giving a more organic speed change
             // note T in Lerp is clamped, so we don't need to clamp our speed
             _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed,
-                Time.deltaTime * SpeedChangeRate);
+                _timeMoving);
 
             // round speed to 3 decimal places
-          //  _speed += Mathf.Round(_speed * 1000f) / 1000f;
+            _speed += Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
         {
             _speed = targetSpeed;
-        }*/
-        _speed = targetSpeed;
+        }
+       // Debug.Log(_speed + " : " + targetSpeed);
+      //  Debug.Log("_timeMoving" + " : " + _timeMoving);
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
@@ -291,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Grounded)
         {
-       
+
             // update animator if using character
             if (_hasAnimator)
             {
@@ -329,8 +354,8 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
 
-                
-                
+
+
             }
 
             // jump timeout
@@ -358,7 +383,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-         
+
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -367,13 +392,13 @@ public class PlayerMovement : MonoBehaviour
             _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
-   
-    private IEnumerator Delay( float delay)
+
+    private IEnumerator Delay(float delay)
     {
         yield return new WaitForSeconds(delay);
         _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-      
+
     }
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
