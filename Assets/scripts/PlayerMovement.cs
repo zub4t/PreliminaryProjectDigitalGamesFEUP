@@ -225,13 +225,34 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
-
+    public void EnableMovement()
+    {
+        _animator.SetBool("CanMove", true);
+    }
+    public void DisableMovement()
+    {
+        _animator.SetBool("CanMove", false);
+    }
+    public void EnableKick()
+    {
+        _animator.SetBool("Kick", true);
+    }
+    public void EnablePunch()
+    {
+        _animator.SetBool("Punch", true);
+    }
+    public void DisableKick()
+    {
+        _animator.SetBool("Kick", false);
+    }
+    public void DisablePunch()
+    {
+        _animator.SetBool("Punch", false);
+    }
     private void Move()
     {
         Vector2 moveV = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        
-        if (!_animator.GetBool("CanMove") || _animator.GetBool("Kick") || _animator.GetBool("Punch") || !Grounded)
+        if (!_animator.GetBool("CanMove"))
         {
             moveV = Vector2.zero;
         }
@@ -276,8 +297,9 @@ public class PlayerMovement : MonoBehaviour
         {
             _speed = targetSpeed;
         }
-       // Debug.Log(_speed + " : " + targetSpeed);
-      //  Debug.Log("_timeMoving" + " : " + _timeMoving);
+       //  Debug.Log(currentHorizontalSpeed + " : " + targetSpeed);
+        //  Debug.Log("_timeMoving" + " : " + _timeMoving);
+       //   Debug.Log("_timeMoving" + " : " + _timeMoving);
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
@@ -302,7 +324,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+        //targetDirection.normalized * (_speed * Time.deltaTime) +
+        _controller.Move(
                          new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
         // update animator if using character
@@ -338,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    if (_animationBlend > 1)
+                    if (_animationBlend > 1.5)
                     {
                         StartCoroutine(Delay(0.1f));
 
