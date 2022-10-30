@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Chomper : MonoBehaviour
 {
+    private Vector3 _previousPosition;
+    public float _curSpeed;
+
     public Transform target;
     private Animator _animator;
     private UnityEngine.AI.NavMeshAgent _navMeshAgent;
@@ -22,6 +25,10 @@ public class Chomper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 curMove = transform.position - _previousPosition;
+        _curSpeed = curMove.magnitude / Time.deltaTime;
+        _previousPosition = transform.position;
         _navMeshAgent.destination = target.position;
+        _animator.SetFloat("Speed", _curSpeed);
     }
 }
