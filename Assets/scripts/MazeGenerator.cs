@@ -149,7 +149,7 @@ public class MazeGenerator : MonoBehaviour
     private void SetUPenemies()
     {
 
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 100; i++)
         {
 
             var randomIndexCell = Random.Range(0, size * size);

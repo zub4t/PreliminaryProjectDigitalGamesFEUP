@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     // timeout deltatime
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
-
+    private bool _speaking;
     // animation IDs
     private int _animIDSpeed;
     private int _animIDGrounded;
@@ -101,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
 
+    private AudioSource _audio;
 
     private float _timeMoving = 0f;
 
@@ -131,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
         EnableMovement();
-
+        _audio = GetComponent<AudioSource>();
     }
 
     private void LateUpdate()
@@ -148,14 +149,33 @@ public class PlayerMovement : MonoBehaviour
 
         BattleMode();
 
+
+        if (_animator.GetBool("CanMove") && !_speaking)
+        {
+            int r = UnityEngine.Random.Range(0, 1000);
+            if (r < 10)
+            {
+                _audio.time = 0.0f;
+                _speaking = true;
+                _audio.clip = RandomSpeakClips[UnityEngine.Random.Range(0, RandomSpeakClips.Length - 1)];
+                _audio.Play();
+                StartCoroutine(CanSpeakAgain());
+            }
+        }
+
+    }
+    IEnumerator CanSpeakAgain()
+    {
+        yield return new WaitForSeconds(20f);
+        _speaking = false;
     }
     public void SwordON()
     {
         Sword.active = true;
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.time = 0.8f;
-        audio.Play();
-        audio.clip = SwordClip;
+        _audio.time = 0.8f;
+        _audio.clip = SwordClip;
+
+        _audio.Play();
 
     }
     public void SwordOFF()
@@ -164,7 +184,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public void KickON()
     {
+        _audio.time = 0.0f;
+        _audio.clip = KickClip;
         Kick.active = true;
+        _audio.Play();
+
     }
     public void KickOFF()
     {

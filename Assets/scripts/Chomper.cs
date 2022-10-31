@@ -25,6 +25,9 @@ public class Chomper : MonoBehaviour
     {
         _canChange = true;
         _canMove = true;
+        var randomIndexCell = Random.Range(0, MazeGenerator.cell.Length - 1);
+        var randomCell = MazeGenerator.cell[randomIndexCell];
+        _target = randomCell.GetWorldPosition();
     }
 
     // Update is called once per frame
@@ -34,14 +37,13 @@ public class Chomper : MonoBehaviour
         _player = GameObject.Find("Capoerista");
         float dist = Vector3.Distance(_target, transform.position);
         float distToPlayer = Vector3.Distance(_player.transform.position, transform.position);
-
-        if (distToPlayer < 10)
+        if (distToPlayer < 8)
         {
 
             _canChange = false;
         }
         if (MazeGenerator.cell != null)
-            if (dist < 10 && _canChange && MazeGenerator.cell.Length > 0)
+            if (dist < 8 && _canChange && MazeGenerator.cell.Length > 0)
             {
                 var randomIndexCell = Random.Range(0, MazeGenerator.cell.Length - 1);
                 var randomCell = MazeGenerator.cell[randomIndexCell];
