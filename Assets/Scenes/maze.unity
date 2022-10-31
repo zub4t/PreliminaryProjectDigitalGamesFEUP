@@ -130,30 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2048076908, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812693661763284, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.036424953
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812693661763284, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0085772155
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812694472143553, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.036424953
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812694472143553, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0085772155
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812694472143556, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 3443812694870859488, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_Name
       value: FullPlayer
@@ -202,26 +178,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3443812694960683659, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: RandomSpeakClips.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3443812694960683659, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: RandomSpeakClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: aadb2d13f4d905c40973172a96a4952b, type: 3}
-    - target: {fileID: 3443812694960683659, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: RandomSpeakClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 989f4c7581a0c8f4596fcce5bac6ca47, type: 3}
-    - target: {fileID: 3443812694960683659, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: RandomSpeakClips.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: 890336dc5166f7b439a07900196d2727, type: 3}
-    - target: {fileID: 3443812694960683659, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
-      propertyPath: RandomSpeakClips.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: 117df72c6b72e7244a6b7f166047e707, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
 --- !u!1 &371541633

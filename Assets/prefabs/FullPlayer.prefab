@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 3443812694472143559}
   - component: {fileID: 3443812694472143552}
   - component: {fileID: 2066040926}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -724,6 +724,26 @@ PrefabInstance:
       propertyPath: horizontalSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2145969371, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
+      propertyPath: RandomSpeakClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145969371, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
+      propertyPath: RandomSpeakClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: aadb2d13f4d905c40973172a96a4952b, type: 3}
+    - target: {fileID: 2145969371, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
+      propertyPath: RandomSpeakClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 989f4c7581a0c8f4596fcce5bac6ca47, type: 3}
+    - target: {fileID: 2145969371, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
+      propertyPath: RandomSpeakClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 890336dc5166f7b439a07900196d2727, type: 3}
+    - target: {fileID: 2145969371, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
+      propertyPath: RandomSpeakClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 117df72c6b72e7244a6b7f166047e707, type: 3}
     - target: {fileID: 6262675205277135071, guid: 6ab1e82b2ce9aa349834949bea7fc99a, type: 3}
       propertyPath: m_Name
       value: Capoerista
@@ -2298,7 +2318,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

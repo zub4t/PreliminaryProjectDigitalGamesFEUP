@@ -7,7 +7,7 @@ public class Chomper : MonoBehaviour
     private Vector3 _previousPosition;
     public float _curSpeed;
 
-    private int _life = 10;
+    private int _life = 3;
     private Vector3 _target;
     private Animator _animator;
     private UnityEngine.AI.NavMeshAgent _navMeshAgent;
