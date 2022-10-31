@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
-
+        EnableMovement();
 
     }
 
@@ -140,6 +140,58 @@ public class PlayerMovement : MonoBehaviour
         BattleMode();
 
     }
+    public void DesableHit()
+    {
+        Debug.Log("DesableHit");
+        _animator.SetBool("Hit", false);
+    }
+    public void Hit()
+    {
+        _animator.SetBool("Hit", true);
+    }
+    private void Check()
+    {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
+        {
+            float dist = Vector3.Distance(transform.position, obj.transform.position);
+            float dot = Vector3.Dot(transform.forward, obj.transform.forward);
+            if (dist < 3 && dot<0)
+            {
+                obj.gameObject.GetComponent<Chomper>().Hited();
+
+            }
+
+            /*
+            RaycastHit hit;
+
+            Vector3 p1 = transform.position + _controller.center;
+            float distanceToObstacle = 0;
+
+            // Cast a sphere wrapping character controller 10 meters forward
+            // to see if it is about to hit anything.
+            if (Physics.SphereCast(p1, _controller.height / 2, transform.forward, out hit, 10, 1 << 8))
+            {
+                distanceToObstacle = hit.distance;
+                Debug.Log(hit.collider.tag);
+                if (hit.collider.CompareTag("enemy"))
+                {
+                    hit.collider.gameObject.GetComponent<Chomper>().Hited();
+                }
+
+            }*/
+
+
+        }
+    }
+
+    public float explosionRadius = 5.0f;
+
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
     void BattleMode()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -151,10 +203,16 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("Punch", true);
 
+
+            Check();
+
+
+
         }
         if (Input.GetMouseButtonDown(1))
         {
             _animator.SetBool("Kick", true);
+            Check();
 
         }
     }
@@ -179,13 +237,7 @@ public class PlayerMovement : MonoBehaviour
        Debug.Log(_verticalVelocity);
    }
     */
-    void OnDrawGizmosSelected()
-    {
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
-            transform.position.z);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(spherePosition, GroundedRadius);
-    }
+
     private void GroundedCheck()
     {
         // set sphere position, with offset
@@ -256,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
         {
             moveV = Vector2.zero;
         }
-        
+
         if (moveV.magnitude < 0.2f)
         {
             _timeMoving = 0f;
@@ -297,9 +349,9 @@ public class PlayerMovement : MonoBehaviour
         {
             _speed = targetSpeed;
         }
-       //  Debug.Log(currentHorizontalSpeed + " : " + targetSpeed);
+        //  Debug.Log(currentHorizontalSpeed + " : " + targetSpeed);
         //  Debug.Log("_timeMoving" + " : " + _timeMoving);
-       //   Debug.Log("_timeMoving" + " : " + _timeMoving);
+        //   Debug.Log("_timeMoving" + " : " + _timeMoving);
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;

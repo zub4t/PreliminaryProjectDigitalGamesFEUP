@@ -16,7 +16,7 @@ public class MazeGenerator : MonoBehaviour
     public GameObject[] enimies;
     [SerializeField] private GameObject _wallPrefab;
     [SerializeField] private GameObject _cubePrefab;
-    private Cell[] _cells;
+    public static Cell[] cell;
     private float _wallSize;
     private DisjointSet _sets;
     private List<GameObject> navMeshElements = new List<GameObject>();
@@ -27,7 +27,7 @@ public class MazeGenerator : MonoBehaviour
         if (generate)
         {
             generate = false;
-            _cells = new Cell[size * size];
+            cell = new Cell[size * size];
             SpawnEntireGrid(size);
             StartCoroutine(RanMaze());
         }
@@ -49,7 +49,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 var positionCell = new Vector3(x * _wallSize, 0, z * _wallSize);
                 Cell newCell = new Cell(x, z, size, positionCell);
-                _cells[x * size + z] = newCell;
+                cell[x * size + z] = newCell;
 
                 Quaternion wallRotation = Quaternion.Euler(0f, 90f, 0f);
                 var positionWall = positionCell + new Vector3(_wallSize / 2f, 0f, 0f);
@@ -69,7 +69,7 @@ public class MazeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    newCell.AddWall(3, _cells[(x - 1) * size + z].GetWall(1));
+                    newCell.AddWall(3, cell[(x - 1) * size + z].GetWall(1));
                 }
 
                 if (z == 0)
@@ -80,7 +80,7 @@ public class MazeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    newCell.AddWall(2, _cells[x * size + z - 1].GetWall(0));
+                    newCell.AddWall(2, cell[x * size + z - 1].GetWall(0));
                 }
             }
         }
@@ -105,7 +105,7 @@ public class MazeGenerator : MonoBehaviour
             }
 
             var randomIndexCell = Random.Range(0, size * size);
-            var randomCell = _cells[randomIndexCell];
+            var randomCell = cell[randomIndexCell];
             var randomWall = Random.Range(0, 4);
             if (randomCell.GetWall(randomWall) == null) continue;
 
@@ -146,12 +146,11 @@ public class MazeGenerator : MonoBehaviour
     private void SetUPenemies()
     {
 
-        for (var i = 0; i < 2; i++)
+        for (var i = 0; i < 10; i++)
         {
 
             var randomIndexCell = Random.Range(0, size * size);
-            var randomCell = _cells[randomIndexCell];
-
+            var randomCell = cell[randomIndexCell];
             Instantiate(enimies[Random.Range(0, enimies.Length)], randomCell.GetWorldPosition() + (Vector3.up * 2), Quaternion.identity);
         }
     }
@@ -171,7 +170,7 @@ public class MazeGenerator : MonoBehaviour
         var predecessors = new int[size * size];
         for (int i = 0; i <= size * size - 1; i++) predecessors[i] = -1;
 
-        var source = _cells[0];
+        var source = cell[0];
         stack.Push(source);
         Cell node = source;
 
@@ -185,7 +184,7 @@ public class MazeGenerator : MonoBehaviour
                 if (node.GetWall(3) == null)
                 {
                     predecessors[indexNode - size] = indexNode;
-                    stack.Push(_cells[indexNode - size]);
+                    stack.Push(cell[indexNode - size]);
                 }
             }
 
@@ -196,7 +195,7 @@ public class MazeGenerator : MonoBehaviour
                     if (node.GetWall(1) == null)
                     {
                         predecessors[indexNode + size] = indexNode;
-                        stack.Push(_cells[indexNode + size]);
+                        stack.Push(cell[indexNode + size]);
                     }
                 }
             }
@@ -208,7 +207,7 @@ public class MazeGenerator : MonoBehaviour
                     if (node.GetWall(0) == null)
                     {
                         predecessors[indexNode + 1] = indexNode;
-                        stack.Push(_cells[indexNode + 1]);
+                        stack.Push(cell[indexNode + 1]);
                     }
                 }
             }
@@ -220,7 +219,7 @@ public class MazeGenerator : MonoBehaviour
                     if (node.GetWall(2) == null)
                     {
                         predecessors[indexNode - 1] = indexNode;
-                        stack.Push(_cells[indexNode - 1]);
+                        stack.Push(cell[indexNode - 1]);
                     }
                 }
             }
@@ -231,10 +230,10 @@ public class MazeGenerator : MonoBehaviour
         var backtrackerIndex = size * size - 1;
         while (backtrackerIndex != 0) //0 is index of the source
         {
-            Instantiate(_cubePrefab, _cells[backtrackerIndex].GetWorldPosition(), Quaternion.identity);
+            Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition(), Quaternion.identity);
             backtrackerIndex = predecessors[backtrackerIndex];
         }
-        Instantiate(_cubePrefab, _cells[backtrackerIndex].GetWorldPosition(), Quaternion.identity);
+        Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition(), Quaternion.identity);
         yield return null;
     }
 
