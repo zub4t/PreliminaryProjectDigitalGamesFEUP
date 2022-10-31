@@ -14,6 +14,7 @@ public class MazeGenerator : MonoBehaviour
     public int stepIteration = 10;
     public bool generate = false;
     public GameObject[] enimies;
+    public GameObject Trophy;
     [SerializeField] private GameObject _wallPrefab;
     [SerializeField] private GameObject _cubePrefab;
     public static Cell[] cell;
@@ -137,9 +138,11 @@ public class MazeGenerator : MonoBehaviour
 
 
         SetUPenemies();
-      
+
+
 
         GameObject.FindGameObjectWithTag("Ground").GetComponent<NavMeshSurface>().BuildNavMesh();
+        Instantiate(Trophy, cell[cell.Length - 1].GetWorldPosition() + Vector3.up * 2, Quaternion.identity);
 
 
     }

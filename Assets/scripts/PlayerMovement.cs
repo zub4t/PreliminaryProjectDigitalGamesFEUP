@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("Acceleration and deceleration")]
     public float SpeedChangeRate = 10.0f;
+    public AudioClip SwordClip;
+    public AudioClip KickClip;
+    public AudioClip DamageClip;
+    public AudioClip[] RandomSpeakClips;
 
     public AudioClip LandingAudioClip;
     public AudioClip[] FootstepAudioClips;
@@ -68,6 +72,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("For locking the camera position on all axis")]
     public bool LockCameraPosition = false;
+
+
+
+    public GameObject Sword;
+    public GameObject Kick;
 
     // cinemachine
     private float _cinemachineTargetYaw;
@@ -139,6 +148,27 @@ public class PlayerMovement : MonoBehaviour
 
         BattleMode();
 
+    }
+    public void SwordON()
+    {
+        Sword.active = true;
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.time = 0.8f;
+        audio.Play();
+        audio.clip = SwordClip;
+
+    }
+    public void SwordOFF()
+    {
+        Sword.active = false;
+    }
+    public void KickON()
+    {
+        Kick.active = true;
+    }
+    public void KickOFF()
+    {
+        Kick.active = false;
     }
     public void DesableHit()
     {
