@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: f3b3f6a697514944da8524250aa64277, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 9c94282089393fd4dba21f9f9b72149e, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1501743, g: 0.114593536, b: 0.104872525, a: 1}
+  m_IndirectSpecularColor: {r: 0.0034410208, g: 0.025359746, b: 0.1565784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -130,21 +130,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2066040926, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 80a13bce4f9feef468a5f320d07a5c95, type: 3}
     - target: {fileID: 3443812693661763284, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.036424935
+      value: -0.036424953
       objectReference: {fileID: 0}
     - target: {fileID: 3443812693661763284, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.008577211
+      value: 0.0085772155
       objectReference: {fileID: 0}
     - target: {fileID: 3443812694472143553, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.036424935
+      value: -0.036424953
       objectReference: {fileID: 0}
     - target: {fileID: 3443812694472143553, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.008577211
+      value: 0.0085772155
       objectReference: {fileID: 0}
     - target: {fileID: 3443812694870859488, guid: 99de53dd37d32404fa1afc9da0b62ad4, type: 3}
       propertyPath: m_Name
