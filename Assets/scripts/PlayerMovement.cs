@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         if (_animator.GetBool("CanMove") && !_speaking)
         {
             int r = UnityEngine.Random.Range(0, 1000);
-            if (r < 10)
+            if (r < 50)
             {
                 _audio.time = 0.0f;
                 _speaking = true;
@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator CanSpeakAgain()
     {
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(10f);
         _speaking = false;
     }
     public void SwordON()

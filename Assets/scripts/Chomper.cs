@@ -26,6 +26,7 @@ public class Chomper : MonoBehaviour
         _canChange = true;
         _canMove = true;
         var randomIndexCell = Random.Range(0, MazeGenerator.cell.Length - 1);
+
         var randomCell = MazeGenerator.cell[randomIndexCell];
         _target = randomCell.GetWorldPosition();
     }
