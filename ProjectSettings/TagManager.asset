@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - enemy
   - Coin
+  - PS5
   layers:
   - Default
   - TransparentFX

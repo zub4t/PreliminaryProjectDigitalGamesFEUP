@@ -5,11 +5,24 @@ using UnityEngine;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject Victory;
+    [SerializeField]
+    private GameObject YouDieMenu;
+    [SerializeField]
+    private GameObject h1;
+    [SerializeField]
+    private GameObject h2;
+    [SerializeField]
+    private GameObject h3;
     [Header("Player")]
+    [Tooltip("How many hits can the player handle")]
+    [SerializeField]
+    private int _life;
     [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 2.0f;
 
@@ -26,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip KickClip;
     public AudioClip DamageClip;
     public AudioClip[] RandomSpeakClips;
+    public AudioClip CoinCollected;
 
     public AudioClip LandingAudioClip;
     public AudioClip[] FootstepAudioClips;
@@ -117,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalSpeed = 2.0F;
     public float verticalSpeed = 2.0F;
 
+
+
     private void Awake()
     {
         // get a reference to our main camera
@@ -146,27 +162,44 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GroundedCheck();
 
-        JumpAndGravity();
-        Move();
-
-        BattleMode();
-
-
-        if (_animator.GetBool("CanMove") && !_speaking)
+        if ((_life > 0))
         {
-            int r = UnityEngine.Random.Range(0, 1000);
-            if (r < 50)
+
+
+            GroundedCheck();
+
+            JumpAndGravity();
+            Move();
+
+            BattleMode();
+
+
+            if (_animator.GetBool("CanMove") && !_speaking)
             {
-                _audio.time = 0.0f;
-                _speaking = true;
-                _audio.clip = RandomSpeakClips[UnityEngine.Random.Range(0, RandomSpeakClips.Length - 1)];
-                _audio.Play();
-                StartCoroutine(CanSpeakAgain());
+                int r = UnityEngine.Random.Range(0, 1000);
+                if (r < 50)
+                {
+                    _audio.time = 0.0f;
+                    _speaking = true;
+                    _audio.clip = RandomSpeakClips[UnityEngine.Random.Range(0, RandomSpeakClips.Length - 1)];
+                    _audio.Play();
+                    StartCoroutine(CanSpeakAgain());
+                }
             }
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Debug.Log("You die");
+            var enemies = GameObject.FindGameObjectsWithTag("enemy");
 
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+            YouDieMenu.active = true;
+        }
     }
     IEnumerator CanSpeakAgain()
     {
@@ -203,9 +236,37 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("DesableHit");
         _animator.SetBool("Hit", false);
     }
+    public void DesableDie()
+    {
+        Debug.Log("DisableDie");
+        _animator.SetBool("Die", false);
+    }
     public void Hit()
     {
-        _animator.SetBool("Hit", true);
+        if (_life == 1)
+        {
+            _animator.SetBool("Die", true);
+
+        }
+        else
+        {
+            _animator.SetBool("Hit", true);
+
+        }
+        switch (_life)
+        {
+            case 3:
+                h3.active = false;
+                break;
+            case 2:
+                h2.active = false;
+                 break;
+            case 1:
+                h1.active = false;
+                break;
+
+        }
+        _life--;
     }
     private void Check()
     {
@@ -275,26 +336,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*
-   void Update()
-   {
-       if (_verticalVelocity < 0)
-       {
-           _verticalVelocity = -2f;
-       }
-
-       // Changes the height position of the player..
-       if (Input.GetButtonDown("Jump") )
-       {
-           Debug.Log("ok");
-           _verticalVelocity += Mathf.Sqrt(JumpHeight * -3.0f * Gravity);
-       }
-
-       _verticalVelocity += Gravity * Time.deltaTime;
-       _controller.Move(new Vector3(0f,_verticalVelocity * Time.deltaTime, 0f));
-       Debug.Log(_verticalVelocity);
-   }
-    */
 
     private void GroundedCheck()
     {
@@ -544,11 +585,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
+            _audio.time = 0.0f;
+            _audio.clip = CoinCollected;
+            _audio.Play();
             Destroy(other.gameObject);
             _nCoins++;
             _textCoin.text = "Coins " + _nCoins.ToString();
         }
 
+        if (other.CompareTag("PS5")) {
+            Victory.active = true;
+            StartCoroutine(MenuLoad());
+        }
+
     }
+    private IEnumerator MenuLoad() {
+        var enemies = GameObject.FindGameObjectsWithTag("enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("menu");
+
+    }
+
 
 }

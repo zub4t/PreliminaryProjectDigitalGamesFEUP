@@ -28,7 +28,7 @@ public class MazeGenerator : MonoBehaviour
     private float _wallSize;
     private DisjointSet _sets;
     private List<GameObject> navMeshElements = new List<GameObject>();
-   
+
 
     private void Start()
     {
@@ -162,7 +162,7 @@ public class MazeGenerator : MonoBehaviour
 
             var randomIndexCell = Random.Range(0, size * size);
             var randomCell = cell[randomIndexCell];
-            Instantiate(enimies[Random.Range(0, enimies.Length)], randomCell.GetWorldPosition() + (Vector3.up * 2), Quaternion.identity);
+            Instantiate(enimies[Random.Range(0, enimies.Length)], new Vector3(randomCell.GetWorldPosition().x, 0.5f, randomCell.GetWorldPosition().z), Quaternion.identity);
         }
     }
 
@@ -253,7 +253,7 @@ public class MazeGenerator : MonoBehaviour
         var backtrackerIndex = size * size - 1;
         while (backtrackerIndex != 0) //0 is index of the source
         {
-            Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition()+Vector3.up, Quaternion.identity);
+            Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition() + Vector3.up, Quaternion.identity);
             backtrackerIndex = predecessors[backtrackerIndex];
         }
         Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition(), Quaternion.identity);

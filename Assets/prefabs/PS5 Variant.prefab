@@ -65,6 +65,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a04af95aa18b0ad4080004548d54da52, type: 3}
       propertyPath: m_Name
+      value: PS5 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a04af95aa18b0ad4080004548d54da52, type: 3}
+      propertyPath: m_TagString
       value: PS5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -74,6 +78,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a04af95aa18b0ad4080004548d54da52, type: 3}
   m_PrefabInstance: {fileID: 5380023998469586836}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &696965357630429769
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073523248521937605}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.009244062, y: 0.026548345, z: 0.032423627}
+  m_Center: {x: 2.3283064e-10, y: 0.0024526329, z: 0.016693665}
 --- !u!114 &354849429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +103,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523e1043c467a734f9bf4b2d8dc91c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotateYawAxis: 0
