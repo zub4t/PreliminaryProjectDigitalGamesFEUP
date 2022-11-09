@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -74,6 +75,9 @@ public class PlayerMovement : MonoBehaviour
     public bool LockCameraPosition = false;
 
 
+    [SerializeField]
+    private TextMeshProUGUI _textCoin;
+    private int _nCoins;
 
     public GameObject Sword;
     public GameObject Kick;
@@ -209,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
         {
             float dist = Vector3.Distance(transform.position, obj.transform.position);
             float dot = Vector3.Dot(transform.forward, obj.transform.forward);
-            if (dist < 3 && dot<0)
+            if (dist < 3 && dot < 0)
             {
                 obj.gameObject.GetComponent<Chomper>().Hited();
 
@@ -536,5 +540,15 @@ public class PlayerMovement : MonoBehaviour
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            Destroy(other.gameObject);
+            _nCoins++;
+            _textCoin.text = "Coins " + _nCoins.ToString();
+        }
+
+    }
 
 }

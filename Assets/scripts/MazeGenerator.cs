@@ -15,13 +15,20 @@ public class MazeGenerator : MonoBehaviour
     public bool generate = false;
     public GameObject[] enimies;
     public GameObject Trophy;
+    [SerializeField] private GameObject _PlayerBundle;
     [SerializeField] private GameObject _wallPrefab;
     [SerializeField] private GameObject _cubePrefab;
+    [SerializeField] private GameObject _coin;
+    [Range(0, 100)]
+    [SerializeField] private int _maxEnemies;
+    [Range(0, 200)]
+    [SerializeField] private int _maxCoins;
+
     public static Cell[] cell;
     private float _wallSize;
     private DisjointSet _sets;
     private List<GameObject> navMeshElements = new List<GameObject>();
-
+   
 
     private void Start()
     {
@@ -138,7 +145,8 @@ public class MazeGenerator : MonoBehaviour
 
 
         SetUPenemies();
-
+        SetUCoins();
+        _PlayerBundle.active = true;
 
 
         GameObject.FindGameObjectWithTag("Ground").GetComponent<NavMeshSurface>().BuildNavMesh();
@@ -149,12 +157,24 @@ public class MazeGenerator : MonoBehaviour
     private void SetUPenemies()
     {
 
-        for (var i = 0; i < 100; i++)
+        for (var i = 0; i < _maxEnemies; i++)
         {
 
             var randomIndexCell = Random.Range(0, size * size);
             var randomCell = cell[randomIndexCell];
             Instantiate(enimies[Random.Range(0, enimies.Length)], randomCell.GetWorldPosition() + (Vector3.up * 2), Quaternion.identity);
+        }
+    }
+
+    private void SetUCoins()
+    {
+
+        for (var i = 0; i < _maxCoins; i++)
+        {
+
+            var randomIndexCell = Random.Range(0, size * size);
+            var randomCell = cell[randomIndexCell];
+            Instantiate(_coin, randomCell.GetWorldPosition() + (Vector3.up * 2), Quaternion.identity);
         }
     }
 
@@ -233,7 +253,7 @@ public class MazeGenerator : MonoBehaviour
         var backtrackerIndex = size * size - 1;
         while (backtrackerIndex != 0) //0 is index of the source
         {
-            Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition(), Quaternion.identity);
+            Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition()+Vector3.up, Quaternion.identity);
             backtrackerIndex = predecessors[backtrackerIndex];
         }
         Instantiate(_cubePrefab, cell[backtrackerIndex].GetWorldPosition(), Quaternion.identity);

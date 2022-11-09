@@ -7,6 +7,7 @@ TagManager:
   - prefabs
   - Ground
   - enemy
+  - Coin
   layers:
   - Default
   - TransparentFX

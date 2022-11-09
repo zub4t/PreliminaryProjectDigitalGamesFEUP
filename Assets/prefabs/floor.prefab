@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3740873820912384281}
   - component: {fileID: 92451611789025094}
   - component: {fileID: 2779884556059690300}
-  m_Layer: 7
+  - component: {fileID: 3902517688201650815}
+  m_Layer: 3
   m_Name: floor
   m_TagString: prefabs
   m_Icon: {fileID: 0}
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 748487d582b00d847bd57517f78d8e8f, type: 2}
+  - {fileID: 2100000, guid: 42e26e838cb21e944aa7de2aae4edefc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,3 +98,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3902517688201650815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9020612650590339454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523e1043c467a734f9bf4b2d8dc91c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotateYawAxis: 1
